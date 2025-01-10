@@ -1,7 +1,11 @@
 package com.example.calculate.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.example.calculate.model.dto.UserDto;
 import com.example.calculate.model.entity.User;
 import com.example.calculate.repository.UserRepository;
+import com.example.calculate.service.PasswordService;
 import com.example.calculate.service.UserService;
 
 @Service
@@ -19,11 +24,13 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 	
 	@Autowired
+	private PasswordService passwordService;
+	
+	@Autowired
 	private ModelMapper modelMapper;
 	
-	
 	@Override
-	public List<UserDto> findAllUsers() {		
+	public List<UserDto> findAllUsers() {	   	
 		
 		return userRepository.findAll()
 				 		     .stream()
@@ -31,38 +38,59 @@ public class UserServiceImpl implements UserService {
 				 		     .toList();
 	}
 
-
 	@Override
 	public Optional<UserDto> findUser(String email) {
 		
-		Optional<User> optUser = userRepository.findUserByEmail(email);
-		
-		return Optional.of( modelMapper.map(optUser, UserDto.class) ) ;
+		return Optional.of( modelMapper.map(userRepository.findUserByEmail(email), UserDto.class) );
 	}
 		
 
 	@Override
-	public Optional<UserDto> createUser(UserDto userDto) {
+	public UserDto createUser(UserDto userDto, String rawPassword) {
 		
 		User user = modelMapper.map(userDto, User.class);
 		
+		// 非 UserDto 屬性
+		
+		Set<String> roles = new HashSet<>();	
+		roles.add("ROLE_USER");
+		
+		String encodePassword = passwordService.encodePassword(rawPassword);
+		
+		// 加入 User 屬性並保存
+		
+		user.setEnabled(true);
+		user.setRoles(roles);
+		user.setEncryptPassword(encodePassword);
 		userRepository.save( user );
 		
-		return Optional.of( modelMapper.map(user, UserDto.class) );
+		return modelMapper.map(user, UserDto.class);
 	}
 
 
 	@Override
-	public Optional<UserDto> updateUser(Long userId, UserDto userDto) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+	public UserDto updateUser(Long userId, UserDto userDto) {
+		
+		User user = userRepository.findById(userId).orElseThrow( ()->new RuntimeException() );
+		
+		user.setAge(userDto.getAge());
+		user.setWeight(userDto.getWeight());
+		user.setHeight(userDto.getHeight());
+		
+		user.setEmail(userDto.getEmail());    // 需修改成 Email 認證後才能變更
+		
+		return modelMapper.map(user, UserDto.class);
 	}
 
 
 	@Override
-	public Optional<UserDto> removeUser(Long userId) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+	public UserDto removeUser(Long userId) {
+		
+		User user = userRepository.findById(userId).orElseThrow( ()->new RuntimeException() );
+		
+		user.setEnabled(false);   // 禁用帳戶
+		
+		return modelMapper.map(user, UserDto.class);
 	}
 	
 	

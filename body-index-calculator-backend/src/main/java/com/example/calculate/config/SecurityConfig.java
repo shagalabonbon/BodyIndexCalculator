@@ -55,25 +55,25 @@ public class SecurityConfig {
 		http
 			.authorizeHttpRequests( authorizeHttpRequests ->
 	        	authorizeHttpRequests
-	            	.requestMatchers("/**")    
+	            	.requestMatchers("/**")
 	            	.permitAll()            	
-	            	.anyRequest()                   // 其他請求需要登錄
+	            	.anyRequest()                    // 其他請求需要登錄
 	             	.authenticated()                             
 	        )
 	    	
-	        .formLogin(formLogin ->                 // 使用表單登錄功能來驗證用戶
+	        .formLogin(formLogin ->                  // 使用表單登錄功能來驗證用戶
 	            formLogin
-	                .loginPage("")                  // 自定義登錄頁面
-	                .loginProcessingUrl("")         // 處理登錄請求的 URL ( security 自動處裡，需要複寫 UserDetailsService )
-	                .defaultSuccessUrl("", true)  	// 登錄成功後的預設頁面
-	                .failureUrl("")        			// 登錄失敗後的頁面          ****** 待處理
-	                .permitAll()                    // 不須授權
+	                .loginPage("/login")             // 自定義登錄頁面
+	                .loginProcessingUrl("/login")    // 處理登錄請求的 URL ( security 自動處裡，需要複寫 UserDetailsService )
+	                .defaultSuccessUrl("/home",true) // 登錄成功後的預設頁面
+	                .failureUrl("/login")        	 // 登錄失敗後的頁面          ****** 待處理
+	                .permitAll()                     // 不須授權
 	        )
 	        
 	        .logout(logout -> 
 	            logout
-	            	.logoutUrl("")                   // 處理登出請求的 URL
-	            	.logoutSuccessUrl("")            // 登出成功後的頁面
+	            	.logoutUrl("/logout")            // 處理登出請求的 URL
+	            	.logoutSuccessUrl("/login")      // 登出成功後的頁面
 	            	.invalidateHttpSession(true)     // 清除 session
 	            	.permitAll()                     // 允許所有請求
 	        )

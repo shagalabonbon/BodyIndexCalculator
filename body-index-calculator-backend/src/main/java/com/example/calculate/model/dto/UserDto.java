@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 public class UserDto {
 	
 	private String  username;
+	private String  email;
+	
 	private String  age;         // 年齡、身高、體重
 	private Integer height;
 	private Integer weight;

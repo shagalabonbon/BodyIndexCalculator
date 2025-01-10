@@ -8,15 +8,20 @@ import com.example.calculate.model.dto.UserDto;
 
 public interface UserService {
 	
+	// 所有用戶
 	List<UserDto> findAllUsers();
 	
+	// 尋找用戶
 	Optional<UserDto> findUser(String email);
 	
-	Optional<UserDto> createUser(UserDto userDto);
+	// 建立
+	UserDto createUser(UserDto userDto, String rawPassword);
 	
-	Optional<UserDto> updateUser(Long userId,UserDto userDto);
+	// 更新
+	UserDto updateUser(Long userId,UserDto userDto);
 	
-	Optional<UserDto> removeUser(Long userId);
+	// 移除
+	UserDto removeUser(Long userId);
 
 	
 }

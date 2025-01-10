@@ -24,11 +24,11 @@ public class User {
 	private String  	username;
 	private String  	encryptPassword;
 	
-	private boolean 	enabled;
-	private boolean 	accountNonExpired;     // 帳戶是否過期
-    private boolean 	credentialsNonExpired; // 密碼是否過期
-    private boolean 	accountNonLocked;      // 帳戶是否被鎖定
-	private Set<String> roles;
+	private boolean 	enabled;               // 帳戶是否啟用 
+//	private boolean 	accountNonExpired;     // 帳戶是否過期
+//  private boolean 	credentialsNonExpired; // 密碼是否過期 
+//  private boolean 	accountNonLocked;      // 帳戶是否被鎖定 ( 密碼錯誤次數過多 )
+	private Set<String> roles;                 // 帳戶權限
 	
 	private String  	email;	
 	private String  	age;         // 年齡、身高、體重
