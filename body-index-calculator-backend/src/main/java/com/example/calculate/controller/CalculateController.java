@@ -1,5 +1,5 @@
 package com.example.calculate.controller;
 
-public class BodyIndexController {
+public class CalculateController {
 
 }

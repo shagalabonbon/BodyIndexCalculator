@@ -9,12 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDto {
 	
-	private String  username;
-	private String  email;
-	
-	private String  age;         // 年齡、身高、體重
-	private Integer height;
-	private Integer weight;
-	
+	private Long    id;
+	private String  username;   // 年齡、性別
+	private String  email;	
+	private String  birth;         
+	private String  gender;
 	
 }

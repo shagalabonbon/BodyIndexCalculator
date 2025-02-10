@@ -1,12 +1,9 @@
 package com.example.calculate.service.impl;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TreeSet;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,9 +36,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Optional<UserDto> findUser(String email) {
+	public UserDto findUser(String email) {
 		
-		return Optional.of( modelMapper.map(userRepository.findUserByEmail(email), UserDto.class) );
+		User user = userRepository.findUserByEmail(email).orElseThrow( ()-> new RuntimeException() );
+		
+		return modelMapper.map(user, UserDto.class);
 	}
 		
 
@@ -73,11 +72,9 @@ public class UserServiceImpl implements UserService {
 		
 		User user = userRepository.findById(userId).orElseThrow( ()->new RuntimeException() );
 		
-		user.setAge(userDto.getAge());
-		user.setWeight(userDto.getWeight());
-		user.setHeight(userDto.getHeight());
-		
-		user.setEmail(userDto.getEmail());    // 需修改成 Email 認證後才能變更
+		user.setUsername(userDto.getUsername());  // 修改名稱
+		user.setBirth(userDto.getBirth());        // 修改生日
+		user.setGender(userDto.getGender());      // 修改性別
 		
 		return modelMapper.map(user, UserDto.class);
 	}

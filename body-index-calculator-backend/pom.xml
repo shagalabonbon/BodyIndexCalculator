@@ -62,10 +62,23 @@
 			<version>3.2.1</version>
 		</dependency>
 
-		<!-- Spring Security 核心依賴 -->
+		<!-- Spring Security 依賴 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		
+		<!-- Redis 依賴 -->
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		
+		<!-- Jwt 依賴 -->
+		<dependency>
+    		<groupId>io.jsonwebtoken</groupId>
+    		<artifactId>jjwt-api</artifactId>
+    		<version>0.11.2</version>
 		</dependency>
 
 

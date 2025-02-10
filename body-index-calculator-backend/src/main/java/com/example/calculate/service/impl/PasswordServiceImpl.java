@@ -21,13 +21,13 @@ public class PasswordServiceImpl implements PasswordService {
 	}
 
 	@Override
-	public Boolean verifyPassword(String inputPassword, String encodePassword) {  
+	public Boolean verifyPassword(String inputPassword, String encodedPassword) {  
 		
-		if( !passwordEncoder.matches(inputPassword, encodePassword)) {
-			return false;
-		}
+		if (inputPassword == null || encodedPassword == null) {
+	        throw new RuntimeException("Passwords must not be null");
+	    }
 		
-		return true;
+		return passwordEncoder.matches(inputPassword, encodedPassword);
 	}
 
 }

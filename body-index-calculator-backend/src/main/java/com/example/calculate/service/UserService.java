@@ -12,7 +12,7 @@ public interface UserService {
 	List<UserDto> findAllUsers();
 	
 	// 尋找用戶
-	Optional<UserDto> findUser(String email);
+	UserDto findUser(String email);
 	
 	// 建立
 	UserDto createUser(UserDto userDto, String rawPassword);

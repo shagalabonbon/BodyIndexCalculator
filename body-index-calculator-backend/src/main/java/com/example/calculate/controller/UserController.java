@@ -44,7 +44,7 @@ public class UserController {
 		
 		Boolean isUserPresent = userService.findAllUsers().stream().anyMatch( user -> user.getEmail().equals(userDto.getEmail()) );
 		
-		if(isUserPresent) {
+		if(isUserPresent) {		
 			return ResponseEntity.status(404).body(ApiResponse.error(404, "USER ALREADY EXISTS"));
 		}
 		
