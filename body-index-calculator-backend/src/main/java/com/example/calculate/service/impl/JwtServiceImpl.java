@@ -35,7 +35,7 @@ public class JwtServiceImpl implements JwtService {
 								     .signWith(generalKey())                                             // 使用密鑰簽名
 								     .setId(getUUID());                                                  // JWT 唯一識別碼 ( jti )
 								     
-		return jwtBuilder.compact();
+		return jwtBuilder.compact();                      // 生成 JWT 字串
 	}
 
 	@Override
